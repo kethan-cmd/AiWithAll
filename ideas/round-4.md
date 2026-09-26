@@ -1,5 +1,7 @@
 # Round 4: New research-backed ideas
 
+> **Superseded by `round-5.md`.** Per feedback: language-based ideas dropped, students removed from benefit forms, Tag In direction revisited.
+
 Seven new ideas. None repeats the rest-window lineage from rounds 1-3 (Last Slot, Bank, Respite Sprint). Each targets a different, measurable harm in dementia caregiving, and most can reuse parts of the Last Slot prototype (role switcher, claim cards, projector board).
 
 **How this round differs.** Rounds 1-3 used two simulated judges. This round was scored by one reviewer with the same weights (Impact 2, Demo 2, Theme 1.5, Novelty 1.5, Feasibility 1, Research 0.5, divided by 8.5), so don't compare these scores directly with earlier rounds. Research was done by three parallel agents that opened each source. "Verified" means someone opened the page and saw the number on it. Unverified numbers are marked and should be kept out of the pitch.
