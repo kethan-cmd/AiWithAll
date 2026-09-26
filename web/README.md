@@ -1,32 +1,32 @@
-# React + TypeScript + Vite
+# Last Slot (prototype)
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+React + React Router + Vite + Tailwind + shadcn/ui. No backend: data lives in
+localStorage and syncs live across browser tabs with BroadcastChannel.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```
+npm install
+npm run dev      # http://localhost:5173
+npm test         # Vitest: grid logic, splitTasks, data layer
+npm run build
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Layout
+
+- `src/data/` entity API (`entities.ts`), models, seed data, claim/verify actions, per-tab session
+- `src/logic/` `grid.ts` (30-min cells, free runs, blockers, metrics), `splitTasks.ts` (mock AI)
+- `src/pages/` one file per screen; `src/components/` shared UI
+
+To swap in a real backend, keep the `EntityApi` shape in `entities.ts` and replace its internals.
+To swap in a real AI, replace the marked spot in `splitTasks.ts` (`REAL AI CALL GOES HERE`).
+
+## Demo script (open 3 tabs)
+
+1. Tab A: Home > Caregiver > "Open Sunflower" (Rest Grid, Sat 1-4pm, LAST SLOT on groceries).
+2. Tab B: Home > Family. Claim a hands-on task (family-only tasks are only here).
+3. Tab C: Home > Student. The Last Slot task is at the top. Claim it.
+4. Tab A flips to "Saturday 1-4pm is yours" with confetti.
+5. Open `/board` on the projector: windows unlocked, hours returned, team leaderboard.
+6. Home > Chaperone: tap Verify on claimed tasks.
+7. "Reset demo" (top right) restores the seeded state.
+
+Each tab has its own role (stored in sessionStorage); the data is shared.
