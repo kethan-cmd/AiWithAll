@@ -31,6 +31,23 @@ export async function setCurrentUser(input: {
   return user
 }
 
+/** Change fields on this tab's user (for example the chosen circle or team). */
+export async function updateCurrentUser(
+  patch: Partial<Pick<User, 'alias' | 'circle_id' | 'team_id'>>,
+): Promise<User | null> {
+  const current = getCurrentUser()
+  if (!current) return null
+  const next = { ...current, ...patch }
+  sessionStorage.setItem(KEY, JSON.stringify(next))
+  // The shared record may have been wiped by Reset demo: ignore that case.
+  try {
+    await UserEntity.update(current.id, patch)
+  } catch {
+    /* record gone: the tab copy is still valid */
+  }
+  return next
+}
+
 export function clearCurrentUser() {
   sessionStorage.removeItem(KEY)
 }

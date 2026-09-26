@@ -49,24 +49,24 @@
 }
 
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
+    --background: oklch(0.975 0.014 85);
+    --foreground: oklch(0.22 0.03 50);
+    --card: oklch(0.995 0.006 85);
     --card-foreground: oklch(0.145 0 0);
     --popover: oklch(1 0 0);
     --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
+    --primary: oklch(0.40 0.085 195);
     --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
+    --secondary: oklch(0.94 0.025 85);
     --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
+    --muted: oklch(0.945 0.02 85);
+    --muted-foreground: oklch(0.42 0.03 60);
     --accent: oklch(0.97 0 0);
     --accent-foreground: oklch(0.205 0 0);
     --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
+    --border: oklch(0.86 0.025 80);
+    --input: oklch(0.78 0.03 80);
+    --ring: oklch(0.40 0.085 195);
     --chart-1: oklch(0.87 0 0);
     --chart-2: oklch(0.556 0 0);
     --chart-3: oklch(0.439 0 0);
@@ -128,3 +128,40 @@
     @apply font-sans;
     }
 }
+/* Last Slot status colors (warm, high contrast) */
+@theme inline {
+  --color-gold: var(--gold);
+  --color-gold-foreground: var(--gold-foreground);
+  --color-good: var(--good);
+  --color-good-soft: var(--good-soft);
+  --color-busy: var(--busy);
+  --color-busy-soft: var(--busy-soft);
+}
+
+:root {
+  --gold: oklch(0.84 0.16 85);
+  --gold-foreground: oklch(0.25 0.06 70);
+  --good: oklch(0.45 0.12 155);
+  --good-soft: oklch(0.93 0.06 155);
+  --busy: oklch(0.52 0.15 40);
+  --busy-soft: oklch(0.93 0.04 50);
+}
+
+html {
+  font-size: 17px;
+}
+
+@keyframes pop-in {
+  0% { opacity: 0; transform: scale(0.85); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--gold) 60%, transparent); }
+  50% { box-shadow: 0 0 0 10px transparent; }
+}
+@keyframes confetti-fall {
+  0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0.9; }
+}
+.animate-pop-in { animation: pop-in 0.35s ease-out both; }
+.animate-glow { animation: glow 1.6s ease-in-out infinite; }
