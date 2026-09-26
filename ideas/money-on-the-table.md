@@ -1,35 +1,34 @@
-# Money on the Table: Product Blueprint (v3)
+# Money on the Table: Product Blueprint
 
-This version drops the questionnaire. **The caregiver photographs the paperwork they already have, and the AI does every step it legally can: it reads the documents, finds likely programs, pre-fills the applications, and lists what's missing.** A person only has to check the drafts, sign, and submit.
+**The caregiver photographs the paperwork they already have, and the AI does every step it legally can: it reads the documents, finds likely programs, pre-fills the applications, and lists what's missing.** A person only has to check the drafts, sign, and submit.
 
-Everything is laid out in the order of the Analog Sprint packet and the Side A chart paper, and each section maps to a rubric line:
+Pod: **Healthcare & Caregiving**. The sections follow the Analog Sprint packet order, and each one maps to a rubric line:
 
-| Rubric line | Weight |
-|---|---|
-| C1 Problem & Urgency | x2 |
-| C2 Solution & AI Function | x3 |
-| C3 Prototype & User Journey | x2 |
-| C4 Team Delivery & Participation | x3 |
-
-Pod: **Healthcare & Caregiving**.
+| Rubric line | Weight | Where |
+|---|---|---|
+| C1 Problem & Urgency | x2 | Sections 2-3 |
+| C2 Solution & AI Function | x3 | Sections 5-6 |
+| C3 Prototype & User Journey | x2 | Section 6 |
+| C4 Team Delivery & Participation | x3 | Section 1 |
 
 ---
 
-## What changed from v2, and why
+## 1. Team agreement (fill in at the table)
 
-**v2 was a survey, and NCOA already does that better.** NCOA's BenefitsCheckUp is free, searches **2,000+ programs** in every state, lets you screen for someone else, and gives a personalized report with "Apply Online" links and blank forms. [How BenefitsCheckUp works](https://benefitscheckup.org/article/what-is-benefitscheckup) We can't beat that on finding programs.
+| Role | Name | Owns |
+|---|---|---|
+| Research lead | ______ | Stats, caregiver interview (section 3), answering "how do you know?" |
+| AI lead | ______ | The extraction prompt and the AI sentence |
+| Screens lead | ______ | Drawing Screens 1-3, then building them in Base44 |
+| Data lead | ______ | Fake demo documents and the one-state limits table |
+| Timekeeper and demo driver | ______ | Keeps milestones on time, runs the live demo |
 
-**The gap is filling in the forms.** NCOA runs the best screener in the country, and its own research still counts **$58 billion a year** unclaimed. [NCOA 2026](https://www.ncoa.org/article/the-58-billion-benefits-gap-affecting-older-adults/) Finding the programs isn't the bottleneck. The paperwork is.
+- **How we decide:** we talk for 2 minutes, then vote. The majority wins, and a tie goes to the owner of that part.
+- **Check-ins:** at each facilitator milestone, each person says in one sentence what they finished and what's next.
+- **Pitch split:** the research lead gives the problem, the AI lead gives the AI sentence, the screens lead walks through the screens, and the demo driver closes on the counter.
+- **Signatures:** ______ ______ ______ ______ ______
 
-v3 changes:
-1. **Documents in, not a survey.** The caregiver snaps the Medicare card, the Social Security award letter, a bank statement and last year's tax return. AI reads the facts off them, so there is no questionnaire.
-2. **Drafted applications out, not a report.** For each likely program, the app produces a **pre-filled application draft** and a **"still needed" list**.
-3. **A clear line on what AI does and doesn't do.** AI reads, matches, fills and flags. **A person signs and submits.** That's either the caregiver as the parent's **authorized representative**, or a free SHIP counselor. Applications allow this: the Washington MSP form lets any adult who knows the household's situation be named authorized representative, with permission to "sign the application on your behalf." [WA HCA 13-691](https://www.hca.wa.gov/assets/free-or-low-cost/13-691.pdf)
-4. **Family sharing stays.** Anything the AI can't do becomes a task a sibling can claim, for example "Get Mom's signature", "Find the 2025 tax return", "Book SHIP to review".
-
----
-
-## 1. Community profile
+## 2. Community profile
 
 - **Who:** family caregivers of a parent or spouse with dementia. Usually one adult child carries most of the load while working.
 - **Size:**
@@ -40,21 +39,29 @@ v3 changes:
   - **Half report a negative financial impact**, and **a quarter take on debt**. [AARP/NAC 2025](https://www.aarp.org/pri/topics/ltss/family-caregiving/caregiving-in-the-us-2025/)
   - **59%** report high to very high stress. [Alzheimer's Association 2026](https://www.alz.org/alzheimers-dementia/facts-figures)
 
-## 2. Problem statement (who / how / why)
+## 3. Problem statement (who / how / why)
 
 > **Family caregivers of people with dementia** (who) **watch benefits their parent likely qualifies for go unclaimed, even though family caregivers already pay about $7,242 a year out of pocket (26% of their income)** (how), **because even after a screener says "you may qualify," someone still has to find the documents and fill out long government forms, and the caregiver has no time left** (why).
 
-**Urgency (C1).**
+**Urgency.**
 - **$58 billion a year** goes unclaimed by eligible older adults across just three programs (SNAP, SSI, Medicare Savings Programs). Only **38%** of eligible 65+ adults get SNAP, and Medicare Savings Program participation is about **49%**. [NCOA 2026](https://www.ncoa.org/article/the-58-billion-benefits-gap-affecting-older-adults/)
+- **Extra Help** with drug costs is worth about **$5,700 a year**, according to SSA's estimate. [NCOA](https://www.ncoa.org/article/what-are-the-benefits-of-medicare-part-d-low-income-subsidy-lis/)
 - Family caregivers (all conditions, not only dementia) spend **$7,242 a year** out of pocket on average, which is **26% of their income**. [AARP 2021](https://www.aarp.org/pri/topics/ltss/family-caregiving/family-caregivers-cost-survey/)
-- The forms are heavy. The Washington MSP application runs **8 sections**, asks for **every household member's Social Security number**, and requires **proof when asked** and **a signature attesting** to everything. [WA HCA 13-691](https://www.hca.wa.gov/assets/free-or-low-cost/13-691.pdf)
-- There is caregiver money on the table too:
-  - Medicare's GUIDE dementia model covers respite "**up to $2,500 annually**". [CMS](https://www.cms.gov/priorities/innovation/innovation-models/guide)
-  - **Every responding state** pays family caregivers through Medicaid in some circumstances. [KFF 2025](https://www.kff.org/medicaid/medicaids-home-care-support-for-family-caregivers-in-2025/)
+- **The forms are heavy.** The Washington MSP application runs **8 sections**, asks for **every household member's Social Security number**, and requires **proof when asked** and **a signature attesting** to everything. [WA HCA 13-691](https://www.hca.wa.gov/assets/free-or-low-cost/13-691.pdf)
+- There is caregiver money on the table too. Medicare's GUIDE dementia model covers respite "**up to $2,500 annually**" through participating providers. [CMS](https://www.cms.gov/priorities/innovation/innovation-models/guide)
 
-## 3. Solution Storm: top 2 side by side
+**Why not just use NCOA?** NCOA's BenefitsCheckUp is free, covers **2,000+ programs** and gives a report with "Apply Online" links and blank forms. [How it works](https://benefitscheckup.org/article/what-is-benefitscheckup) Yet NCOA's own research still counts $58B unclaimed. Finding the programs isn't the bottleneck. **Filling in the forms is.**
 
-| | v2: Survey version | **v3: Paperwork version (chosen)** |
+**Caregiver evidence (fill in before the pitch).** Talk to one caregiver: a parent, a grandparent, a neighbor, or a mentor who has cared for someone. Ask:
+1. "Have you ever looked up help you might qualify for?"
+2. "What stopped you from applying, or what was the hardest part?"
+3. "If someone filled in the forms and you only had to sign, would you do it?"
+
+> Quote: "________________________________________" (relationship: ______)
+
+## 4. Solution Storm: top 2 side by side
+
+| | Survey version | **Paperwork version (chosen)** |
 |---|---|---|
 | User gives | 10 tap answers | Photos of documents they already have |
 | AI does | Explains matches | **Reads** the documents, **matches** programs, **fills** the application drafts |
@@ -62,15 +69,15 @@ v3 changes:
 | vs NCOA | Duplicates it | Fills in the blank forms NCOA links to |
 | Why chosen | Easy to build, but NCOA already does it | It does the part people actually get stuck on |
 
-## 4. Three must-have features (MVP box)
+## 5. Three must-have features (MVP box)
 
 1. **Snap your paperwork.** Upload photos of 3-4 standard documents. AI pulls out the key facts (birth date, Medicare status, monthly income, bank balance), and the caregiver confirms each one with a tap.
-2. **Drafted applications.** For each likely program (the demo uses the Medicare Savings Program and GUIDE respite), the app shows the application fields **already filled in** from the documents, with the source document next to each field and a **"still needed"** list.
-3. **Hand-off and share.** The two steps AI can't do, **sign** and **submit**, become tasks along with any missing documents. Family claims them, and a **"$ in progress"** counter tracks it all.
+2. **Drafted applications.** The demo drafts two real forms: the **Medicare Savings Program** and **Extra Help (SSA-1020)**. Each draft shows the fields **already filled in** from the documents, with the source document next to each field and a **"still needed"** list. GUIDE has no application, so it becomes a task: "Find a GUIDE provider."
+3. **Hand-off and share.** The steps AI can't do (**sign**, **submit**, **find a GUIDE provider**) become tasks along with any missing documents. Family claims them, and a **"$ in progress"** counter tracks it all.
 
 **Not in the MVP:** submitting to agencies, e-signatures, storing SSNs, and more than one state.
 
-## 5. Side A: Product Blueprint
+## 6. Side A: Product Blueprint
 
 **User story.**
 > As a daughter caring for my mom with dementia while working full time, I want to hand over the paperwork I already have and get applications that are ready to sign, so we actually get the help instead of just a list of maybe.
@@ -79,29 +86,35 @@ v3 changes:
 
 **Screen 1: Start.** "Snap your paperwork." Four big tiles: *Medicare card*, *Social Security letter*, *Bank statement*, *Tax return*. Each tile turns green when it's uploaded. The screen says "Only you can see these files."
 
-**Screen 2: AI does its job.** A card with the extracted facts ("Age 81 · Medicare A+B · $1,640/mo Social Security · $3,200 in bank"), each with a ✓ to confirm. Below it are the matched programs, each with an **"Open draft"** button. Draw one draft open beside the card: the real form fields filled in, each tagged with its source document (for example "from: SS letter"). The SSN field is always left blank with the note **"fill by hand."**
+**Screen 2: AI does its job.** A card with the extracted facts ("Age 81 · Medicare A+B · $1,640/mo Social Security · $3,200 in bank"), each with a ✓ to confirm. Below it are two program cards, **Medicare Savings Program** and **Extra Help**, each with an **"Open draft"** button. Draw one draft open beside the card: the real form fields filled in, each tagged with its source document (for example "from: SS letter"). The SSN field is always left blank with the note **"fill by hand."**
 
 > **AI sentence:** The caregiver **gives** photos of their parent's paperwork → the AI **reads** the facts, **matches** likely programs and **fills in** the applications → the caregiver **gets** drafts to check and sign, plus a list of what's still missing.
 
 **Screen 3: Next step.** "What's left." Tasks for the things only a person can do, each with who claimed it:
-- Caregiver: "Sign as authorized representative"
+- Caregiver: "Sign both applications as authorized representative"
 - Brother: "Book SHIP counselor to review and submit"
-- Sister: "Find 2025 tax return"
+- Sister: "Find a GUIDE provider near Mom (up to $2,500/yr respite)"
 
-Any unclaimed task shows a big **Claim** button. A big counter shows "**about $4,700/yr in progress** (estimate: Part B premium the MSP would cover, plus up to $2,500 GUIDE respite; check the current premium on the day)". The ✓ marks fill in as tasks are done.
+Any unclaimed task shows a big **Claim** button. A big counter shows "**about $8,100/yr in progress** (estimate)". The ✓ marks fill in as tasks are done.
+
+The counter adds up two estimates:
+- **$2,435**: the 2026 Part B premium the MSP would pay, $202.90 a month × 12 ([Medicare.gov](https://www.medicare.gov/basics/costs/medicare-costs))
+- **about $5,700**: SSA's estimate for Extra Help
+
+Re-check both on the day.
 
 **Guardrails.**
-- **AI never signs or submits.** A person signs (the applicant or their authorized representative), and a person submits, ideally after a free SHIP counselor reviews it.
+- **AI never signs or submits.** A person signs (the applicant or their authorized representative), and a person submits, ideally after a free SHIP counselor reviews it. Some forms allow a named authorized representative to "sign the application on your behalf." [WA HCA 13-691](https://www.hca.wa.gov/assets/free-or-low-cost/13-691.pdf)
 - **Sensitive data:**
-  - SSNs and full account numbers are **never stored**. The AI is asked for only 4 facts (birth date, Medicare parts, monthly income, bank balance), so it never pulls out an SSN or account number, and the SSN field is always filled by hand.
-  - The photos are deleted once the facts are extracted.
+  - SSNs and full account numbers are **never stored**. The AI is asked for only 4 facts (birth date, Medicare parts, monthly income, bank balance), so it never pulls out an SSN or account number. The SSN field is always filled by hand.
+  - Photos are deleted once the facts are confirmed.
   - Only the caregiver's account can see documents. Family sees tasks, never the files.
 - **The human checks every fact.** Each extracted value shows its source document, and the caregiver confirms it before it goes into a draft.
-- **Eligibility is "likely," never promised.** Income and asset limits come from a fixed table for one state, dated on screen. AI does not decide eligibility.
+- **Eligibility is "likely," never promised.** Matching uses fixed income and asset limits for one state, dated on screen. The AI reads and fills, but a rules table decides "likely."
 - **The demo uses fake documents only.** No real family's paperwork goes into a hackathon app.
 
 **BASE prompt** (to paste into Base44 after lunch):
-> Build a mobile-first web app called "Money on the Table" for family caregivers of people with dementia. Screen 1: four upload tiles (Medicare card, Social Security award letter, bank statement, tax return) that save files to a Document entity visible only to the uploading user. Screen 2: use AI file extraction to pull out date of birth, Medicare parts, monthly income, and bank balance into a Facts entity, showing each value next to its source document with a confirm checkmark. Extract only these four fields, never Social Security numbers or account numbers. After the user confirms the facts, delete the uploaded file and its Document record. Match programs with simple rules: Medicare Savings Program if confirmed income and bank balance are under a fixed one-state limits table; GUIDE respite if Medicare A+B and the caregiver checks "has a dementia diagnosis." Show matching programs as cards labeled "Likely match, confirm with a free counselor." Each card opens a pre-filled draft of about 6 key form fields filled from the facts, with the SSN field always blank and marked "fill by hand," plus a "still needed" list. Screen 3: a task list (sign as authorized representative, book SHIP counselor, find missing document) with Claim buttons and claimer names stored in a Task entity, plus a large running total of estimated dollars in progress. Calm design, large buttons.
+> Build a mobile-first web app called "Money on the Table" for family caregivers of people with dementia. Screen 1: four upload tiles (Medicare card, Social Security award letter, bank statement, tax return) that save files to a Document entity visible only to the uploading user. Screen 2: use AI file extraction to pull out date of birth, Medicare parts, monthly income, and bank balance into a Facts entity, showing each value next to its source document with a confirm checkmark. Extract only these four fields, never Social Security numbers or account numbers. After the user confirms the facts, delete the uploaded file and its Document record. Match programs with simple rules: Medicare Savings Program and Extra Help if confirmed income and bank balance are under a fixed one-state limits table. Show matching programs as cards labeled "Likely match, confirm with a free counselor." Each card opens a pre-filled draft of about 6 key form fields filled from the facts, with the SSN field always blank and marked "fill by hand," plus a "still needed" list. Screen 3: a task list (sign as authorized representative, book SHIP counselor to review and submit, find a GUIDE provider if the caregiver checks "has a dementia diagnosis", find missing document) with Claim buttons and claimer names stored in a Task entity, plus a large running total of estimated dollars in progress. Calm design, large buttons.
 
 ---
 
@@ -117,36 +130,24 @@ Any unclaimed task shows a big **Claim** button. A big counter shows "**about $4
 
 **Line for judges:** "NCOA tells you what you might get. We take the paperwork you already have and hand you the applications, ready to sign."
 
-## How this scores on the rubric
-
-- **C1 (x2):** $58B is unclaimed *even though* a great free screener exists, which proves the paperwork is the bottleneck.
-- **C2 (x3):** three strong AI verbs (read → match → fill), with a clear input (photos) and output (drafts). The guardrail line is easy to explain: "AI fills, a human signs."
-- **C3 (x2):** the three screens follow start → AI does its job → next step exactly: snap → drafts → family claims sign and submit, with the counter going up.
-- **C4 (x3):** clear jobs to split: 1 on fake demo documents and the limits table, 1 on the AI extraction prompt, 1 on screens, 1 on research and the pitch, and 1 as timekeeper and demo driver.
-
 ## Risks
 
 - **Extraction mistakes** from blurry photos or unusual layouts. The confirm checkmark on every fact is the fix. Test with clean demo documents.
 - **Privacy is the first question judges will ask.** Lead with it: "No SSNs stored, files deleted after reading, family never sees documents, demo uses fake paperwork."
 - **Rules differ by state and change yearly.** Use one state's limits and put the date on screen.
-- **Feasibility:** document upload and AI extraction are the riskiest part of the build. Check early that Base44's built-in file upload and AI extraction work for this, and that uploads are private and can be deleted (if not, say so honestly in the pitch and rely on fake documents). If extraction fails twice, fall back to the caregiver typing 4 numbers, and keep the rest of the flow.
+- **Feasibility:** document upload and AI extraction are the riskiest part of the build.
+  - Check early that Base44's built-in file upload and AI extraction work, and that uploads are private and can be deleted. If not, say so honestly in the pitch and rely on fake documents.
+  - If extraction fails twice, fall back to the caregiver typing 4 numbers, and keep the rest of the flow.
 
----
+## Judge review
 
-## Final judge score (simulated, after 3 review passes)
+We ran a simulated judge after 3 review passes. It scored the blueprint **66/100**: C1 8, C2 7, C3 7, C4 5. Here is how each point was addressed:
 
-| Criterion | Score | Reason |
-|---|---|---|
-| C1 Problem & Urgency (x2) | 8 | Clear who/how/why with strong numbers; "paperwork is the blocker" is inferred, not shown with caregiver evidence |
-| C2 Solution & AI Function (x3) | 7 | Clean AI sentence; "matches" is really a rules table, and GUIDE has no form to fill |
-| C3 Prototype & User Journey (x2) | 7 | Follows start → AI job → next step; Screen 2 is crowded |
-| C4 Team Delivery (x3) | 5 | Judged on the written role plan only: no names, agreement, or timeline yet |
+| Judge fix | Status |
+|---|---|
+| Swap GUIDE's fake "draft" for a real second form | **Done:** the drafts are now MSP and Extra Help, and GUIDE is a "find a provider" task |
+| Recompute the counter with the current Part B premium | **Done:** $2,435 + about $5,700 ≈ $8,100 |
+| Fill in named roles, how we decide, and the pitch split (C4) | **Template added** in section 1. The team fills in names |
+| Add one real caregiver quote (C1) | **Interview prompts added** in section 3. The team fills in the quote |
 
-**Total: 66 / 100.** Biggest strength: honest positioning against NCOA and the "AI fills, a human signs" line.
-
-**Top fixes, ranked:**
-1. C4: fill in the Team Agreement page (named roles, how you decide, who presents what).
-2. C2/C3: use a second real form (SNAP or Extra Help) as the second draft. Show GUIDE as a "find a participating provider" task, since families join GUIDE through a provider rather than an application.
-3. C1: get one real caregiver quote showing forms, not finding programs, are the blocker. Recompute the counter with the current Part B premium.
-
-**Most likely judge question:** "How do you know the forms are what stop people? Did you talk to caregivers?" The doc does not answer this yet.
+**Most likely judge question:** "How do you know the forms are what stop people? Did you talk to caregivers?" Answer it with the quote from section 3.

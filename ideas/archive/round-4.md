@@ -1,6 +1,6 @@
 # Round 4: New research-backed ideas
 
-> **Superseded by `round-5.md`.** Per feedback: language-based ideas dropped, students removed from benefit forms, Tag In direction revisited.
+> **Superseded by [round-5.md](round-5.md).** Per feedback: language-based ideas dropped, students removed from benefit forms, Tag In direction revisited.
 
 Seven new ideas. None repeats the rest-window lineage from rounds 1-3 (Last Slot, Bank, Respite Sprint). Each targets a different, measurable harm in dementia caregiving, and most can reuse parts of the Last Slot prototype (role switcher, claim cards, projector board).
 
