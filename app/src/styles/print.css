@@ -1,0 +1,79 @@
+/* Print only the application draft: no header, navigation, footer or side
+   panels. Black on white, with the draft watermark kept faint. */
+
+@media print {
+  @page {
+    margin: 0.6in;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 11pt;
+  }
+
+  /* App chrome: the site header and footer sit beside <main>. */
+  :has(> main) > header,
+  main ~ footer,
+  main ~ *,
+  nav,
+  aside,
+  [data-print-hide] {
+    display: none !important;
+  }
+
+  /* Anything outside the form is invisible; the form sits at the top. */
+  body * {
+    visibility: hidden;
+  }
+  [data-print-root],
+  [data-print-root] * {
+    visibility: visible;
+  }
+  [data-print-root] {
+    position: absolute;
+    inset: 0 0 auto 0;
+    width: 100%;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  [data-print-root] > div {
+    padding-inline: 0 !important;
+  }
+
+  [data-print-root] * {
+    color: #000 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  [data-print-root] .draft-box-filled {
+    border: 1px solid #000 !important;
+  }
+  [data-print-root] .draft-box-hand {
+    border: 1.5px dashed #555 !important;
+    min-height: 0.45in;
+  }
+  [data-print-root] .draft-source {
+    border: 0 !important;
+    font-style: italic;
+    color: #333 !important;
+  }
+  [data-print-root] .draft-stamp {
+    border-color: #000 !important;
+  }
+  [data-print-root] .draft-watermark span {
+    color: rgb(0 0 0 / 0.07) !important;
+  }
+  [data-print-root] section {
+    break-inside: avoid;
+  }
+  [data-print-root] a[href]::after {
+    content: '';
+  }
+}
