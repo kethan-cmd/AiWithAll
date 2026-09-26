@@ -18,8 +18,12 @@ export const SAMPLE = {
   facts: {
     birth_date: '1945-03-14',
     medicare_parts: ['A', 'B'] as ('A' | 'B' | 'D')[],
-    /** Social Security benefit per month, in cents. */
-    monthly_income_cents: 142000,
+    /**
+     * Social Security benefit per month, in cents. $1,542 sits in Washington's
+     * 2026 SLMB band (over $1,483 QMB, at or under $1,616 SLMB) and under the
+     * Extra Help line ($1,995). See src/rules/rules2026.ts.
+     */
+    monthly_income_cents: 154200,
     /** Checking + savings on the latest statement, in cents. */
     bank_balance_cents: 320000,
   },
@@ -33,7 +37,7 @@ export const SAMPLE = {
     bank_name: 'Evergreen Community Credit Union',
     statement_period: 'August 1 - August 31, 2026',
     tax_year: 2025,
-    /** Form 1040 line 6a, Social Security benefits, in cents. */
-    tax_ss_benefits_cents: 1704000,
+    /** Form 1040 line 6a, Social Security benefits, in cents ($1,500/mo in 2025, before the 2.8% 2026 raise). */
+    tax_ss_benefits_cents: 1800000,
   },
 } as const

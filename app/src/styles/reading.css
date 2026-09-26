@@ -1,0 +1,210 @@
+/* Reading overlay: the document under a sweeping scan line, then highlight
+   boxes that pop in over each value found, each with a label chip.
+   Every animation here is turned off under prefers-reduced-motion. */
+
+.rd-stage {
+  position: relative;
+  isolation: isolate;
+}
+
+/* The document itself sits on a soft paper shadow. */
+.rd-doc {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow:
+    0 1px 2px oklch(0.25 0.03 160 / 0.08),
+    0 24px 60px -24px oklch(0.2 0.04 160 / 0.45);
+  transition: filter 0.6s ease;
+}
+.rd-stage[data-state='reading'] .rd-doc {
+  filter: saturate(0.85);
+}
+
+/* Viewfinder corners while reading. */
+.rd-corner {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-color: var(--gold);
+  border-style: solid;
+  border-width: 0;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.rd-stage[data-state='reading'] .rd-corner {
+  opacity: 1;
+}
+.rd-corner[data-c='tl'] { top: -8px; left: -8px; border-top-width: 3px; border-left-width: 3px; border-top-left-radius: 10px; }
+.rd-corner[data-c='tr'] { top: -8px; right: -8px; border-top-width: 3px; border-right-width: 3px; border-top-right-radius: 10px; }
+.rd-corner[data-c='bl'] { bottom: -8px; left: -8px; border-bottom-width: 3px; border-left-width: 3px; border-bottom-left-radius: 10px; }
+.rd-corner[data-c='br'] { bottom: -8px; right: -8px; border-bottom-width: 3px; border-right-width: 3px; border-bottom-right-radius: 10px; }
+
+/* The gold scan line with a soft glow trailing above it. */
+.rd-scan {
+  position: absolute;
+  inset-inline: 0;
+  top: -24%;
+  height: 24%;
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in oklch, var(--gold) 10%, transparent) 55%,
+    color-mix(in oklch, var(--gold) 34%, transparent) 100%
+  );
+  border-bottom: 2px solid var(--gold);
+  filter: drop-shadow(0 2px 8px color-mix(in oklch, var(--gold) 80%, transparent));
+  animation: rd-sweep 1.5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+@keyframes rd-sweep {
+  0% { top: -24%; opacity: 0; }
+  12% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* A faint dimmer once the reading is done, so the boxes stand out. */
+.rd-dim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: oklch(0.25 0.03 165 / 0.12);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.rd-stage[data-state='done'] .rd-dim {
+  opacity: 1;
+}
+
+/* Highlight box over a found value. */
+.rd-box {
+  position: absolute;
+  z-index: 3;
+  border-radius: 6px;
+  background: color-mix(in oklch, var(--gold) 12%, transparent);
+  outline: 2px solid var(--gold);
+  box-shadow:
+    0 0 0 5px color-mix(in oklch, var(--gold) 22%, transparent),
+    0 10px 30px -10px oklch(0.3 0.08 70 / 0.6);
+  animation: rd-pop 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+/* A single sheen that runs across the box as it lands. */
+.rd-box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(100deg, transparent 20%, oklch(1 0 0 / 0.65) 50%, transparent 80%);
+  background-size: 250% 100%;
+  background-position: 120% 0;
+  animation: rd-sheen 0.9s ease-out both;
+  animation-delay: calc(var(--delay, 0ms) + 250ms);
+  mix-blend-mode: soft-light;
+}
+@keyframes rd-pop {
+  0% { opacity: 0; transform: scale(1.18); }
+  60% { opacity: 1; }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes rd-sheen {
+  from { background-position: 120% 0; }
+  to { background-position: -120% 0; }
+}
+
+/* Label chip above (or below) the box. Fixed dark colors: it always sits on
+   white paper, in either theme. */
+.rd-chip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: -2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  max-width: min(22rem, 80vw);
+  padding: 0.3rem 0.65rem 0.3rem 0.5rem;
+  border-radius: 999px;
+  background: oklch(0.24 0.045 165);
+  color: oklch(0.98 0.01 95);
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  box-shadow: 0 8px 24px -8px oklch(0.15 0.04 165 / 0.6);
+  animation: rd-chip-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--delay, 0ms) + 180ms);
+}
+.rd-chip[data-side='below'] {
+  bottom: auto;
+  top: calc(100% + 8px);
+}
+.rd-chip[data-align='end'] {
+  left: auto;
+  right: -2px;
+}
+.rd-chip-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: var(--gold);
+  flex: none;
+}
+@keyframes rd-chip-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Small overlays (thumbnails) hide chips and use thinner outlines. */
+.rd-stage[data-size='sm'] .rd-chip {
+  display: none;
+}
+.rd-stage[data-size='sm'] .rd-box {
+  outline-width: 1.5px;
+  box-shadow: 0 0 0 3px color-mix(in oklch, var(--gold) 22%, transparent);
+}
+
+/* Progress bar under the document. */
+.rd-bar {
+  position: relative;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--muted);
+  overflow: hidden;
+}
+.rd-bar > span {
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--evergreen), color-mix(in oklch, var(--evergreen) 60%, var(--gold)));
+  transition: width 0.25s ease-out;
+}
+
+/* Photo-deleted confirmation check. */
+.rd-deleted {
+  animation: rd-chip-in 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rd-scan {
+    display: none;
+  }
+  .rd-box,
+  .rd-box::after,
+  .rd-chip,
+  .rd-deleted {
+    animation: none;
+  }
+  .rd-doc,
+  .rd-dim,
+  .rd-corner,
+  .rd-bar > span {
+    transition: none;
+  }
+}

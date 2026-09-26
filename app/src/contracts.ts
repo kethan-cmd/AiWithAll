@@ -118,7 +118,7 @@ export interface Fact extends BaseRecord {
   mode: ReadMode
   confidence: Confidence
   confirmed: boolean
-  /** Short redacted text the value came from, e.g. "Monthly benefit $1,420.00". */
+  /** Short redacted text the value came from, e.g. "Monthly benefit $1,542.00". */
   snippet?: string
 }
 
@@ -186,7 +186,7 @@ export interface ProgramMatch {
   name: string
   likely: boolean
   tier?: MspTier
-  /** Plain-English reasons, e.g. "Income $1,420/mo is under the $1,622 SLMB limit". */
+  /** Plain-English reasons, e.g. "Income $1,542/mo is under the $1,616 SLMB limit". */
   reasons: string[]
   /** Estimated yearly value in cents (0 if not counted in the total). */
   est_annual_cents: number

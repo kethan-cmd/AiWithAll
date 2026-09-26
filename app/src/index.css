@@ -4,9 +4,19 @@
 @import "@fontsource-variable/geist";
 @import "@fontsource-variable/fraunces";
 
-/* Dark mode follows the operating system. The .dark class also works, for a
-   future toggle. */
-@custom-variant dark (&:where(.dark, .dark *));
+/* Dark mode follows the operating system, so every `dark:` utility works
+   with prefers-color-scheme. A .light class on <html> opts out, and a .dark
+   class opts in, for a future toggle. */
+@custom-variant dark {
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not(.light), :root:not(.light) *) {
+      @slot;
+    }
+  }
+  &:where(.dark, .dark *) {
+    @slot;
+  }
+}
 
 @theme inline {
   --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
@@ -45,6 +55,11 @@
   --color-good-soft: var(--good-soft);
   --color-warn: var(--warn);
   --color-warn-soft: var(--warn-soft);
+  /* Light text for use on evergreen-deep bands, in both themes. */
+  --color-on-deep: var(--on-deep);
+  --color-on-deep-muted: var(--on-deep-muted);
+  /* Hairline rules for editorial layouts. */
+  --color-rule: var(--rule);
 
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
@@ -53,6 +68,89 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Soft, layered shadows: shadow-card for resting cards, shadow-lift for
+     floating chips and hover. */
+  --shadow-card: var(--shadow-card-value);
+  --shadow-lift: var(--shadow-lift-value);
+
+  /* Motion. Every animation below is switched off by prefers-reduced-motion. */
+  --ease-out-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --animate-rise: mot-rise 0.7s var(--ease-out-soft) both;
+  --animate-fade: mot-fade 0.6s ease-out both;
+  --animate-scan: mot-scan 3.2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  --animate-mark: mot-mark 0.5s var(--ease-out-soft) both;
+  --animate-float: mot-float 6s ease-in-out infinite;
+  --animate-pulse-ring: mot-pulse-ring 2.4s ease-out infinite;
+}
+
+@keyframes mot-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes mot-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* A scan line that sweeps down a document card and back. */
+@keyframes mot-scan {
+  0% {
+    top: 4%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    top: 92%;
+    opacity: 1;
+  }
+  60% {
+    opacity: 0;
+  }
+  100% {
+    top: 4%;
+    opacity: 0;
+  }
+}
+/* A highlight box drawing itself around a found value. */
+@keyframes mot-mark {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes mot-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+@keyframes mot-pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in oklch, var(--good) 45%, transparent);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 10px color-mix(in oklch, var(--good) 0%, transparent);
+  }
 }
 
 :root {
@@ -65,11 +163,14 @@
   --evergreen-soft: oklch(0.94 0.03 160);
   --gold: oklch(0.80 0.13 80);
   --gold-soft: oklch(0.95 0.045 85);
-  --gold-foreground: oklch(0.30 0.06 70);
+  --gold-foreground: oklch(0.34 0.07 68);
   --good: oklch(0.48 0.11 155);
   --good-soft: oklch(0.94 0.05 155);
-  --warn: oklch(0.55 0.14 55);
+  --warn: oklch(0.52 0.14 55);
   --warn-soft: oklch(0.95 0.04 65);
+  --on-deep: oklch(0.97 0.01 95);
+  --on-deep-muted: oklch(0.84 0.03 150);
+  --rule: oklch(0.86 0.015 100);
 
   --background: var(--paper);
   --foreground: var(--ink);
@@ -89,8 +190,17 @@
   --border: oklch(0.89 0.012 100);
   --input: oklch(0.82 0.015 100);
   --ring: var(--evergreen);
+
+  --shadow-card-value: 0 1px 2px oklch(0.3 0.03 160 / 0.06), 0 4px 16px -4px oklch(0.3 0.03 160 / 0.1);
+  --shadow-lift-value: 0 2px 4px oklch(0.3 0.03 160 / 0.06), 0 16px 40px -12px oklch(0.25 0.04 160 / 0.28);
+  --grain-opacity: 0.07;
+  --grain-blend: multiply;
+
+  color-scheme: light;
 }
 
+/* Dark theme values, written twice: once for the OS preference, once for an
+   explicit .dark class. Keep the two blocks in sync. */
 @media (prefers-color-scheme: dark) {
   :root:not(.light) {
     --paper: oklch(0.19 0.018 165);
@@ -105,16 +215,96 @@
     --good-soft: oklch(0.28 0.05 155);
     --warn: oklch(0.78 0.12 60);
     --warn-soft: oklch(0.30 0.05 60);
+    --on-deep: oklch(0.96 0.01 95);
+    --on-deep-muted: oklch(0.78 0.03 150);
+    --rule: oklch(1 0 0 / 12%);
+    --marker: oklch(0.88 0.13 88 / 0.38);
+    --marker-top: 74%;
 
     --card: oklch(0.23 0.02 165);
+    --card-foreground: var(--ink);
     --popover: oklch(0.23 0.02 165);
+    --popover-foreground: var(--ink);
     --primary-foreground: oklch(0.17 0.02 165);
     --secondary: oklch(0.27 0.02 165);
     --muted: oklch(0.27 0.02 165);
-    --muted-foreground: oklch(0.74 0.02 150);
+    --muted-foreground: oklch(0.76 0.02 150);
     --border: oklch(1 0 0 / 11%);
     --input: oklch(1 0 0 / 18%);
+
+    --shadow-card-value: 0 1px 2px oklch(0 0 0 / 0.3), 0 6px 20px -6px oklch(0 0 0 / 0.45);
+    --shadow-lift-value: 0 2px 4px oklch(0 0 0 / 0.3), 0 20px 48px -12px oklch(0 0 0 / 0.6);
+    --grain-opacity: 0.09;
+    --grain-blend: soft-light;
+
+    color-scheme: dark;
   }
+}
+:root.dark {
+  --paper: oklch(0.19 0.018 165);
+  --ink: oklch(0.95 0.01 95);
+  --evergreen: oklch(0.72 0.11 162);
+  --evergreen-deep: oklch(0.15 0.02 165);
+  --evergreen-soft: oklch(0.27 0.04 165);
+  --gold: oklch(0.82 0.13 82);
+  --gold-soft: oklch(0.30 0.05 80);
+  --gold-foreground: oklch(0.92 0.06 85);
+  --good: oklch(0.74 0.13 155);
+  --good-soft: oklch(0.28 0.05 155);
+  --warn: oklch(0.78 0.12 60);
+  --warn-soft: oklch(0.30 0.05 60);
+  --on-deep: oklch(0.96 0.01 95);
+  --on-deep-muted: oklch(0.78 0.03 150);
+  --rule: oklch(1 0 0 / 12%);
+  --marker: oklch(0.88 0.13 88 / 0.38);
+  --marker-top: 74%;
+  --card: oklch(0.23 0.02 165);
+  --card-foreground: var(--ink);
+  --popover: oklch(0.23 0.02 165);
+  --popover-foreground: var(--ink);
+  --primary-foreground: oklch(0.17 0.02 165);
+  --secondary: oklch(0.27 0.02 165);
+  --muted: oklch(0.27 0.02 165);
+  --muted-foreground: oklch(0.76 0.02 150);
+  --border: oklch(1 0 0 / 11%);
+  --input: oklch(1 0 0 / 18%);
+  --shadow-card-value: 0 1px 2px oklch(0 0 0 / 0.3), 0 6px 20px -6px oklch(0 0 0 / 0.45);
+  --shadow-lift-value: 0 2px 4px oklch(0 0 0 / 0.3), 0 20px 48px -12px oklch(0 0 0 / 0.6);
+  --grain-opacity: 0.09;
+  --grain-blend: soft-light;
+  color-scheme: dark;
+}
+
+/* A sheet of paper that stays light in both themes (the application draft).
+   Resets every token the draft uses to its light value. */
+.paper-light {
+  --paper: oklch(0.985 0.008 90);
+  --ink: oklch(0.22 0.025 160);
+  --evergreen: oklch(0.36 0.07 165);
+  --evergreen-soft: oklch(0.94 0.03 160);
+  --gold: oklch(0.80 0.13 80);
+  --gold-soft: oklch(0.95 0.045 85);
+  --gold-foreground: oklch(0.34 0.07 68);
+  --good: oklch(0.48 0.11 155);
+  --good-soft: oklch(0.94 0.05 155);
+  --warn: oklch(0.52 0.14 55);
+  --warn-soft: oklch(0.95 0.04 65);
+  --rule: oklch(0.86 0.015 100);
+  --background: oklch(0.985 0.008 90);
+  --foreground: oklch(0.22 0.025 160);
+  --card: oklch(0.995 0.004 90);
+  --card-foreground: oklch(0.22 0.025 160);
+  --primary: oklch(0.36 0.07 165);
+  --primary-foreground: oklch(0.99 0.005 90);
+  --muted: oklch(0.955 0.012 90);
+  --muted-foreground: oklch(0.45 0.02 160);
+  --border: oklch(0.88 0.01 90);
+  --input: oklch(0.82 0.015 100);
+  --ring: oklch(0.36 0.07 165);
+  --marker: color-mix(in oklch, oklch(0.80 0.13 80) 55%, transparent);
+  --marker-top: 62%;
+  color-scheme: light;
+  color: var(--ink);
 }
 
 @layer base {
@@ -126,18 +316,144 @@
     font-size: 17px;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    /* Anchored sections clear the sticky header. */
+    scroll-padding-top: 5rem;
   }
   body {
     @apply bg-background text-foreground;
+    min-height: 100dvh;
+    font-feature-settings: 'ss01', 'cv11';
   }
-  h1, h2, h3 {
+  h1,
+  h2,
+  h3 {
     font-family: var(--font-display);
-    letter-spacing: -0.015em;
+    letter-spacing: -0.02em;
+    font-optical-sizing: auto;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background: color-mix(in oklch, var(--gold) 45%, transparent);
+    color: var(--ink);
+  }
+  /* A clear, consistent focus ring for anything keyboard focusable. */
+  :where(a, button, summary, [role='button'], input, select, textarea, [tabindex]):focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  main:focus {
+    outline: none;
+  }
+}
+
+/* ------------------------------------------------------------ utilities */
+
+/* Page container: 16px gutter on phones, wider on large screens. */
+@utility container-page {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  @media (width >= 40rem) {
+    padding-inline: 1.5rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 2rem;
+  }
+}
+
+/* Small uppercase label above headlines. */
+@utility eyebrow {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Big display numbers. */
+@utility numeral {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -0.03em;
+  font-feature-settings: 'tnum', 'lnum';
+}
+
+/* Film grain overlay (CSS only). Put on a positioned container. */
+@utility grain {
+  isolation: isolate;
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: var(--grain-opacity);
+    mix-blend-mode: var(--grain-blend);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* Soft gradient mesh for the hero. */
+@utility mesh-hero {
+  background:
+    radial-gradient(60% 55% at 85% 20%, color-mix(in oklch, var(--gold) 22%, transparent) 0%, transparent 70%),
+    radial-gradient(55% 60% at 10% 90%, color-mix(in oklch, var(--evergreen) 16%, transparent) 0%, transparent 70%),
+    radial-gradient(40% 40% at 50% 0%, color-mix(in oklch, var(--evergreen-soft) 80%, transparent) 0%, transparent 70%),
+    var(--paper);
+}
+
+/* Faint ruled-paper lines, for document mockups. */
+@utility ruled {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 27px,
+    color-mix(in oklch, var(--rule) 60%, transparent) 27px,
+    color-mix(in oklch, var(--rule) 60%, transparent) 28px
+  );
+}
+
+/* Gold marker-pen underline for a key phrase in a headline. In dark mode
+   (see below) it becomes a thinner, brighter stroke instead of a muddy fill. */
+@utility marker {
+  background-image: linear-gradient(
+    transparent var(--marker-top, 62%),
+    var(--marker, color-mix(in oklch, var(--gold) 55%, transparent)) var(--marker-top, 62%),
+    var(--marker, color-mix(in oklch, var(--gold) 55%, transparent)) 92%,
+    transparent 92%
+  );
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding-inline: 0.06em;
+}
+
+/* Stagger helper: style={{ '--delay': '120ms' }} with animate-rise. */
+@utility delay-var {
+  animation-delay: var(--delay, 0ms);
+}
+
+@media print {
+  [data-print-hide] {
+    display: none !important;
+  }
+  body {
+    background: white;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
