@@ -37,6 +37,17 @@ function getChannel(): BroadcastChannel | null {
   channel = new BroadcastChannel(CHANNEL_NAME)
   channel.onmessage = (e: MessageEvent<{ entity: string }>) => {
     notifyLocal(e.data.entity)
+    // Browsers can deliver the message before the localStorage write is
+    // visible in this tab, so notify again shortly after.
+    setTimeout(() => notifyLocal(e.data.entity), 150)
+  }
+  // The storage event fires in other tabs only once the new value is readable.
+  if (typeof window !== 'undefined') {
+    window.addEventListener('storage', (e) => {
+      if (e.key?.startsWith(STORAGE_PREFIX)) {
+        notifyLocal(e.key.slice(STORAGE_PREFIX.length))
+      }
+    })
   }
   return channel
 }

@@ -43,6 +43,7 @@ export default function RestGridPage() {
     if (prev.current && prev.current !== 'unlocked' && status === 'unlocked') {
       setCelebrate(true)
     }
+    if (status !== 'unlocked') setCelebrate(false) // e.g. after Reset demo
     prev.current = status
   }, [ready, status])
 
