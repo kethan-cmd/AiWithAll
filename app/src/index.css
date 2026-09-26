@@ -218,8 +218,8 @@
     --on-deep: oklch(0.96 0.01 95);
     --on-deep-muted: oklch(0.78 0.03 150);
     --rule: oklch(1 0 0 / 12%);
-    --marker: oklch(0.88 0.13 88 / 0.38);
-    --marker-top: 74%;
+    --marker: oklch(0.82 0.13 82 / 0.8);
+    --marker-top: 84%;
 
     --card: oklch(0.23 0.02 165);
     --card-foreground: var(--ink);
@@ -256,8 +256,8 @@
   --on-deep: oklch(0.96 0.01 95);
   --on-deep-muted: oklch(0.78 0.03 150);
   --rule: oklch(1 0 0 / 12%);
-  --marker: oklch(0.88 0.13 88 / 0.38);
-  --marker-top: 74%;
+  --marker: oklch(0.82 0.13 82 / 0.8);
+  --marker-top: 84%;
   --card: oklch(0.23 0.02 165);
   --card-foreground: var(--ink);
   --popover: oklch(0.23 0.02 165);
